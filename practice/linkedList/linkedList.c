@@ -9,7 +9,7 @@
 // popNode : 리스트 맨 뒤 노드를 빼서 반환하는 ADT -> ok
 // shiftNode : 리스트 맨 앞 노드를 빼서 반환하는 ADT -> ok
 // insertByIndex : 특정 index 바로 뒤에 노드를 붙이는 ADT -> ok
-// removeByIndex : 특정 index의 노드를 빼서 반환하는 ADT
+// removeByIndex : 특정 index의 노드를 빼서 반환하는 ADT -> ok
 // printList : 리스트 전체를 출력하는 ADT -> ok
 // deleteList : 해당 리스트를 삭제하는 ADT
 
@@ -72,7 +72,7 @@ void insertByIndex(Node *header, int insertIdx, int newData){   // 완료
     newNode->next = p->next;
     p->next = newNode;
 }
-int removeByIndex(Node *header, int removeIdx) {
+int removeByIndex(Node *header, int removeIdx) {    // 완료
     Node *p = header;
 
     for (int i = 0; i < removeIdx - 1; i++) { p = p->next; }
@@ -83,17 +83,30 @@ int removeByIndex(Node *header, int removeIdx) {
     free(q);
     return rt;
 }
-void printList(Node *header) {
+void printList(Node *header) {      // 완료
     Node *p = header;
-    for (p = header->next; p != NULL; p = p->next) { printf("%d ", p->data); };
+    if (p->next == NULL) {
+        printf("None!\n");
+        return;
+    }
+
+    for (p = header->next; p; p = p->next) { printf("%d ", p->data); };
     printf("\n");
 }
+
+
+// 이중 반복?
 void deleteList(Node *header) {
-    return;
+    Node *p = header;
+
+    for (p = header; p !)
+    
 }
 
 int main(void) {
     Node *header = makeNode(0);
+
+    printList(header);  // None!
 
     appendNode(header, 3);
     appendNode(header, 2);
@@ -104,11 +117,11 @@ int main(void) {
     unshiftNode(header, 11);
     printList(header);  // 11 6 3 2 8
 
-    printf("shifted %d\n", shiftNode(header));
+    printf("shifted %d\n", shiftNode(header));  // 11 삭제
     printList(header);  // 6 3 2 8
 
-    printf("popped %d\n", popNode(header));
-    printf("popped %d\n", popNode(header));
+    printf("popped %d\n", popNode(header));     // 8 삭제
+    printf("popped %d\n", popNode(header));     // 2 삭제
     printList(header);  // 6 3
 
     insertByIndex(header, 1, 20);
@@ -119,6 +132,9 @@ int main(void) {
     printf("removed %d\n", removeByIndex(header, 1));   // 50 삭제
     printf("removed %d\n", removeByIndex(header, 2));   // 6 삭제
     printList(header);  // 15 20 3
+
+    deleteList(header);
+    printList(header);  // None!
 
     return 0;
 }
