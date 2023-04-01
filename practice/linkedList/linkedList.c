@@ -94,14 +94,15 @@ void printList(Node *header) {      // 완료
     printf("\n");
 }
 
-
 // 이중 반복?
-void deleteList(Node *header) {
+/*void deleteList(Node *header) {
     Node *p = header;
-
-    for (p = header; p !)
-    
-}
+    while (1) {
+        for (p = header; p->next->next != NULL; p = p->next) {
+            Node *q = p->next;
+        }
+    }
+}*/
 
 int main(void) {
     Node *header = makeNode(0);
@@ -133,8 +134,8 @@ int main(void) {
     printf("removed %d\n", removeByIndex(header, 2));   // 6 삭제
     printList(header);  // 15 20 3
 
-    deleteList(header);
-    printList(header);  // None!
+    // deleteList(header);
+    // printList(header);  // None!
 
     return 0;
 }
