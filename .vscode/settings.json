@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "rbtree.h": "c",
+        "stdio.h": "c"
+    }
+}
