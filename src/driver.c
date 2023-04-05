@@ -35,6 +35,26 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < 14; i++) {
         printf("%d ", arr[i]);
     }
+    printf("\n");
+
+    int x;
+    x = rbtree_erase(tree, rbtree_find(tree, 10));
+    x = rbtree_erase(tree, rbtree_find(tree, 5));
+    x = rbtree_erase(tree, rbtree_find(tree, 8));
+    // x = rbtree_erase(tree, rbtree_find(tree, 34));
+    // x = rbtree_erase(tree, rbtree_find(tree, 67));
+    // x = rbtree_erase(tree, rbtree_find(tree, 23));
+    // x = rbtree_erase(tree, rbtree_find(tree, 156));
+    // x = rbtree_erase(tree, rbtree_find(tree, 24));
+    // x = rbtree_erase(tree, rbtree_find(tree, 2));
+    // x = rbtree_erase(tree, rbtree_find(tree, 12));
+    // x = rbtree_erase(tree, rbtree_find(tree, 24));
+    // x = rbtree_erase(tree, rbtree_find(tree, 36));
+    // x = rbtree_erase(tree, rbtree_find(tree, 990));
+    // x = rbtree_erase(tree, rbtree_find(tree, 25));
+
+    inorderTraversalPrint(t);
+
 
     return 0;
 }
