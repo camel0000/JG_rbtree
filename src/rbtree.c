@@ -136,7 +136,7 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
     }
   }
 
-  // z의 멤버 값 설정(?)
+  // z의 멤버 값 설정
   z->parent = y;      // 위 while문에서 ---> x 위치에 z 삽입, y는 x 즉, z의 부모 노드이도록 위치를 탐색하고 왔음
   if (y == t->nil) {  // 삽입된 노드가 없는 경우 (z가 루트 노드가 되는 경우)
     t->root = z;
@@ -250,7 +250,7 @@ void rbtree_erase_fixup(rbtree *t, node_t *x) {
     }
   }
   x->color = RBTREE_BLACK;
-} 
+}
 
 void rbtree_transplant(rbtree *t, node_t *u, node_t *v) {
   if (u->parent == t->nil) {
@@ -267,6 +267,7 @@ void rbtree_transplant(rbtree *t, node_t *u, node_t *v) {
 
 node_t *rbtree_min_from_subtree(rbtree *t, node_t *z) {   // 후계자 찾아서 반환하기
   node_t *x = z;
+
   while (x->left != t->nil) {
     x = x->left;
   }
@@ -275,21 +276,23 @@ node_t *rbtree_min_from_subtree(rbtree *t, node_t *z) {   // 후계자 찾아서
 
 int rbtree_erase(rbtree *t, node_t *z) {
   node_t *y = z;
-  color_t y_original_color = y->color;
+  color_t y_original_color; // 삭제될 노드 색상 임시 변수 활용 -> BLACK 삭제 시, fix up 필요
 
   node_t *x;
 
   if (z->left == t->nil) {              // case 1 : 왼자식 nil
-    x = z->right;
-    rbtree_transplant(t, z, z->right);
+    y_original_color = y->color;        // z의 원래 색상을 기록 (임시) -> 이식 후, 색상 선택에 이용
+    x = z->right;                       // x는 삭제될 z의 대체 노드
+    rbtree_transplant(t, z, z->right);  // 서브트리 이식
   }
-  else if (z->right == t->nil) {        // case 2 : 오른자식 nil
+  else if (z->right == t->nil) {        // case 2 : 오른자식 nil => case 1의 단순 반대
+    y_original_color = y->color;
     x = z->left;
     rbtree_transplant(t, z, z->left);
   }
-  else {                                // case 3 : 두 자식 nil X
-    y = rbtree_min_from_subtree(t, z->right);
-    y_original_color = y->color;
+  else {                                        // case 3 : 두 자식 nil X
+    y = rbtree_min_from_subtree(t, z->right);   // y는 후계 노드
+    y_original_color = y->color;                // 후계 노드의 색상 기록
     x = y->right;
 
     if (y->parent == z) {
@@ -306,7 +309,7 @@ int rbtree_erase(rbtree *t, node_t *z) {
     y->color = z->color;
   }
   
-  if (y_original_color == RBTREE_BLACK) {
+  if (y_original_color == RBTREE_BLACK) {   // 삭제된 노드의 색이 BLACK이면 fixup
     rbtree_erase_fixup(t, x);
   }
 
