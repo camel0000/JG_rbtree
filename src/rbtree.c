@@ -11,11 +11,24 @@ rbtree *new_rbtree(void) {
   return tree;
 }
 
+void postorderTraversalFree(rbtree *t, node_t *z) {
+  if (z->left == NULL && z->right == NULL) return;
+
+  postorderTraversalFree(t, z->left);
+  postorderTraversalFree(t, z->right);
+  free(z);
+}
+
 void delete_rbtree(rbtree *t) {
-  // TODO: reclaim the tree nodes's memory
+  if (t->root == t->nil) {
+    free(t->nil);
+    free(t);
+    return;
+  }
+  node_t *z = t->root;
+  postorderTraversalFree(t, z);
 
-
-
+  free(t->nil);
   free(t);
 }
 
